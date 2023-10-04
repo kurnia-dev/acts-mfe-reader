@@ -3,8 +3,6 @@ import { ref, computed, watch, reactive } from 'vue';
 import { MenuOption } from 'ts-mfe-console-vue-components/dist/types/options';
 import useColumns from '@/option/columns';
 import FilterButton from '@/components/FilterButton.vue';
-import DownloadButton from '@/components/DownloadButton.vue';
-import ButtonScanQR from '@/components/ButtonScanQR.vue';
 import TableFilter from '@/components/modules/Filter/TableFilter.vue';
 import StockDetail from './StockDetail.vue';
 import AddReaderStockDialog from '@/components/modules/AddReaderStock/AddReaderStockDialog.vue';
@@ -13,11 +11,20 @@ import { useStore } from 'vuex';
 const store = useStore();
 const columns = useColumns();
 const stock = ref();
-const totalRecords = ref<number>(100);
+const totalRecords = ref<number>(0);
+const toast = useToast();
 
-const fetchData = (params?: FetchParams) => {
-  fetchAPI('/v2/_id', params).then((res) => {
+const fetchData = (params?: FetchParams, isScan?: boolean) => {
+  getTagStock(params).then((res) => {
     stock.value = res?.data;
+    totalRecords.value = res?.data.length;
+    if (isScan && totalRecords.value === 0) {
+      toast.add({
+        severity: 'error',
+        detail: 'Asset not found',
+        life: 3000,
+      });
+    }
   });
 };
 
@@ -49,8 +56,12 @@ const showFilter = ref<boolean>(false);
 const showDetail = ref<boolean>(false);
 
 import { AllFilter } from '@/types/filterList.type';
-import { fetchAPI } from '@/services/reader.service';
+import { getTagStock, getAllData } from '@/services/reader.service';
 import FetchParams from '@/types/fetchParams.type';
+import { useToast } from 'primevue/usetoast';
+import { AxiosError } from 'axios';
+import { TableColumn } from '@/types/TableColumn';
+import { exportToExcel } from '@/utils';
 
 const showAddQR = ref<boolean>(false);
 const showAddQRState = computed(() => store.state.showAddQR);
@@ -83,11 +94,57 @@ watch(fetchParams, () => {
   fetchData(fetchParams);
 });
 
-const scan = (res: any) => console.log(res);
+const onScanQR = (qr: string) => {
+  fetchParams.qrTag = qr;
+  fetchData(fetchParams, true);
+};
+
+const exportExcel = async () => {
+  try {
+    store.commit('LOADING', true);
+    const headers = columns.value.map((column: TableColumn) => column.header);
+    const response = await getAllData('/v2/_id');
+    if (response?.status === 200) {
+      const data = response.data.map((data: any) => ({
+        image: data.image,
+        name: data.name,
+        sku: data.sku,
+        category: data.category,
+        brand: data.brand,
+        model: data.model,
+        stock: data.stock,
+        lastTransaction: data.lastTransaction,
+        transactionQty: data.transactionQty,
+        company: data.company,
+        manager: data.manager,
+        transactionDate: data.transactionDate,
+      }));
+
+      exportToExcel({
+        headers,
+        filename: 'qrTag_stock',
+        data,
+      });
+    }
+  } catch (error) {
+    const errorMessage =
+      (error as AxiosError).code === 'ERR_BAD_REQUEST'
+        ? 'Error, failed to download the asset from the available list. Please check your internet connection.'
+        : 'Error, failed to download the asset from the available list.';
+
+    toast.add({
+      severity: 'error',
+      detail: errorMessage,
+      life: 3000,
+    });
+  } finally {
+    store.commit('LOADING', false);
+  }
+};
 </script>
 <template>
   <div class="table__toolbar">
-    <ButtonScanQR @scan="scan" />
+    <ButtonScanQR @scan="onScanQR" />
     <SearchButton
       v-model="query"
       @search="
@@ -97,7 +154,12 @@ const scan = (res: any) => console.log(res);
       "
     />
     <FilterButton @toggleFilter="showFilter = !showFilter" />
-    <DownloadButton />
+    <Button
+      icon="ri-download-2-line"
+      severity="success"
+      outlined
+      @click="exportExcel"
+    />
   </div>
   <TableFilter
     v-show="showFilter"

@@ -48,6 +48,18 @@ body {
   // overflow: hidden;
 }
 
+dl, ol, ul {
+  margin-bottom: 0;
+}
+
+ol, ul {
+  padding-left: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
 .form-group {
   @include margin-bottom(16px);
   label {

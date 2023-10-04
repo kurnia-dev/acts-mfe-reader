@@ -65,6 +65,7 @@ img {
     display: flex;
     gap: 18px;
     margin-bottom: 12px;
+    align-items: center;
   }
   .details {
     display: flex;

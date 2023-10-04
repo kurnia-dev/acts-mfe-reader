@@ -1,9 +1,9 @@
 import { TableColumn } from '@/types/TableColumn';
 import Image from 'primevue/image';
-import ButtonScanQR from '@/components/ButtonScanQR.vue';
 import Field from '@/components/modules/AddReaderStock/Field.vue';
 import { ref, Ref } from 'vue';
 import { getImg } from '@/utils';
+import { ButtonScanQR } from 'ts-mfe-console-vue-components';
 
 const useColumns = (): Ref<TableColumn[]> => {
   return ref<TableColumn[]>([
@@ -18,7 +18,7 @@ const useColumns = (): Ref<TableColumn[]> => {
             src: getImg(''),
             preview: true,
             imageStyle:
-              'height:36px;width:36px;object-fit:cover;border-radius:10px;',
+              'height:36px;width:36px;object-fit:cover;border-radius:8px;',
             class: 'image img-preview',
           },
         };

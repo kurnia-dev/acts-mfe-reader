@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref, defineProps, computed } from 'vue';
 import store from '@/store';
-import ButtonScanQR from '@/components/ButtonScanQR.vue';
 import Field from './Field.vue';
 
 interface Client {

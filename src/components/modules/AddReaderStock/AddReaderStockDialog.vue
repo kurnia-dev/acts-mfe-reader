@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { fetchAPI } from '@/services/reader.service';
+import { getStockDetail } from '@/services/reader.service';
 import FormStep from './FormStep.vue';
 import DetailCard from '@/components/common/DetailCard.vue';
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import FetchParams from '@/types/fetchParams.type';
 
 const props = defineProps<{
@@ -11,12 +11,12 @@ const props = defineProps<{
 
 const currentItem = ref();
 const fetchDetail = (params?: FetchParams) => {
-  fetchAPI('/v2/_id/' + props.id, params).then((data) => {
-    currentItem.value = data;
+  getStockDetail(props.id, params).then((res) => {
+    currentItem.value = res?.data;
   });
 };
 
-fetchDetail();
+onMounted(() => fetchDetail());
 /**
  * Object contains detailed information about the tag
  * passed into detailCard component.
@@ -51,43 +51,13 @@ const propItem = computed(() => ({
 <template>
   <div
     style="
-      width: max-content;
+      width: 644px;
       text-align: left;
       display: flex;
       flex-direction: column;
       gap: 12px;
     "
   >
-    <!-- <div class="wrapper">
-      <img :src="image" alt="" />
-      <div class="details">
-        <div>
-          <div class="device_name">Handheld Reader</div>
-          <div class="model_name">TS-HNDSR-001</div>
-        </div>
-        <div
-          style="
-            display: flex;
-            justify-content: space-between;
-            flex-direction: column;
-            gap: 2px;
-          "
-        >
-          <div
-            class="column"
-            v-for="(value, key) in details"
-            :key="key + value"
-          >
-            <div class="key">{{ key }}</div>
-            <div class="separator">:</div>
-            <div class="value">
-              <NameContainer :name="value" />
-            </div>
-          </div>
-        </div>
-        <div class="stock_info">Current Stock: {{ currentStocks }} Unit(s)</div>
-      </div>
-    </div> -->
     <DetailCard :item="propItem" />
     <FormStep />
   </div>

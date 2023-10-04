@@ -1,9 +1,6 @@
 /* eslint-disable vue/multi-word-component-names */
 import { h, createApp } from 'vue';
 import singleSpaVue from 'single-spa-vue';
-import axios from 'axios';
-
-axios.defaults.baseURL = 'https://6511032e3ce5d181df5d9d8c.mockapi.io/';
 
 import App from './App.vue';
 import router from './router';
@@ -29,6 +26,7 @@ import {
   CategoryTree,
   DateText,
   StaticTable,
+  ButtonScanQR,
 } from 'ts-mfe-console-vue-components';
 
 import Button from 'primevue/button';
@@ -72,6 +70,7 @@ const vueLifecycles = singleSpaVue({
     app.use(PrimeVue);
     app.use(ToastService);
     app.use(DialogService);
+    app.use(CToastService);
 
     app.component('Button', Button);
     app.component('Column', Column);
@@ -90,6 +89,7 @@ const vueLifecycles = singleSpaVue({
     app.component('Dropdown', Dropdown);
     app.component('Toolbar', Toolbar);
     app.component('Loading', Loading);
+    app.component('ButtonScanQR', ButtonScanQR);
 
     app.component('DynamicTable', DynamicTable);
     app.component('StaticTable', StaticTable);
