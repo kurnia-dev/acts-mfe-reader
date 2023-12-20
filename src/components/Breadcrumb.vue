@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { computed, defineProps } from 'vue'; // Import the defineProps function from the vue package
 import { Menus } from '@/types/breadcrumb';
 
 const props = defineProps<{
