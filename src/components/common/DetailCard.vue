@@ -18,6 +18,7 @@ const props = defineProps<{
 }>();
 
 const image = computed(() => getImg(props.item.image_name));
+const triggerError = computed<string>(() => undefined);
 </script>
 <template>
   <div class="details_container">
