@@ -43,4 +43,14 @@ jobs:
 
       - name: Unit Testing
         run: yarn test:unit
-            
+
+  auto-merge:
+    name: Auto Merge
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Merge
+        uses: KeisukeYamashita/auto-pull-request-merge@v1
+        with:
+          intervalSeconds: 10
+          timeoutSeconds: 30
