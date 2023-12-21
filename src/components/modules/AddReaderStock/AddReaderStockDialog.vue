@@ -10,10 +10,13 @@ const props = defineProps<{
 }>();
 
 const currentItem = ref();
-const fetchDetail = (params?: FetchParams) => {
-  fetchAPI('/v2/_id/' + props.id, params).then((data) => {
+const fetchDetail = async (params?: FetchParams): Promise<void> => {
+  try {
+    const data = await fetchAPI(`/v2/_id/${props.id}`, params);
     currentItem.value = data;
-  });
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 fetchDetail();
