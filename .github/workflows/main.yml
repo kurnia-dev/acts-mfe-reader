@@ -43,12 +43,4 @@ jobs:
 
       - name: Unit Testing
         run: yarn test:unit
-
-  merge-checks:
-    name: Merge PR
-    runs-on: ubuntu-latest
-    steps:
-      - id: automerge
-      - name: auto-pull-request-merge
-        uses: KeisukeYamashita/auto-pull-request-merge@v1.0.6
             
