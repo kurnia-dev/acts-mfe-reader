@@ -13,12 +13,16 @@ const formatDate = (date: any) => {
   if (date) return new Date(date).toLocaleDateString('en-gb');
   return '';
 };
-const formatDateTime = (date: any) => {
-  if (date)
-    return new Date(date).toLocaleString('en-gb', {
+
+const formatDateTime = (date?: string | Date | null) => {
+  if (date) {
+    const options: Intl.DateTimeFormatOptions = {
       dateStyle: 'short',
       timeStyle: 'short',
-    });
+    };
+
+    return new Date(date).toLocaleString('en-gb', options);
+  }
   return '';
 };
 
@@ -79,16 +83,22 @@ const getFile = (fileName: string) => {
   return `${baseURL}/v2/assets/files/${user.companyCode}/${fileName}`;
 };
 
+let user: any;
+
+const getUser = () => {
+  if (!user) {
+    user = JSON.parse(localStorage.getItem('user')!);
+  }
+  return user;
+};
+
 const getImg = (fileName?: any) => {
   const imgPlaceholder =
     'https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg';
-
   const baseURL = process.env.VUE_APP_ASSETS_API;
-  const user = JSON.parse(localStorage.getItem('user')!);
-
-  if (!fileName || !user) return imgPlaceholder;
-  const imagePath = `${baseURL}/v2/assets/images/${user.companyCode}/${fileName}`;
-
+  const currentUser = getUser();
+  if (!fileName || !currentUser) return imgPlaceholder;
+  const imagePath = `${baseURL}/v2/assets/images/${currentUser.companyCode}/${fileName}`;
   return imagePath;
 };
 
