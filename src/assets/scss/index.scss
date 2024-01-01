@@ -42,10 +42,20 @@ h5 {
 
 body {
   background: $canvas !important;
-  // font-size: 18px; // 14pt
   @include font-size(11.2px);
   max-width: 100vw;
-  // overflow: hidden;
+}
+
+dl, ol, ul {
+  margin-bottom: 0;
+}
+
+ol, ul {
+  padding-left: 0;
+}
+
+a {
+  text-decoration: none;
 }
 
 .form-group {
@@ -91,5 +101,9 @@ body {
   background: $dark-weak;
 }
 
-// @import '~bootstrap/scss/bootstrap.scss';
+.p-datatable .p-datatable-thead > tr > th {
+  border-bottom: 1px solid $general-line;
+  background: $primary-bg-weak;
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap');

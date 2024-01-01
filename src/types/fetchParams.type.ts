@@ -10,6 +10,8 @@ interface FetchParams extends FilterParams {
   limit?: number;
   sortOrder?: number;
   sortField?: string;
+  qrTag?: string;
+  rfidTag?: string;
 }
 
 export default FetchParams;

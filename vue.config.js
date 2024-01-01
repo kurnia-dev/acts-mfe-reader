@@ -17,6 +17,7 @@ module.exports = defineConfig({
     resolve: {
       alias: {
         '@': path.resolve(__dirname, 'src'),
+        '~node': path.resolve(__dirname, 'node_modules'),
         '~rfs': path.resolve(__dirname, 'node_modules/rfs'),
         '~primevue': path.resolve(__dirname, 'node_modules/primevue'),
         '~remixicon': path.resolve(__dirname, 'node_modules/remixicon'),

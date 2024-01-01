@@ -1,9 +1,6 @@
 /* eslint-disable vue/multi-word-component-names */
 import { h, createApp } from 'vue';
 import singleSpaVue from 'single-spa-vue';
-import axios from 'axios';
-
-axios.defaults.baseURL = 'https://6511032e3ce5d181df5d9d8c.mockapi.io/';
 
 import App from './App.vue';
 import router from './router';
@@ -13,7 +10,7 @@ import Toast from 'primevue/toast';
 import ToastService from 'primevue/toastservice';
 import DialogService from 'primevue/dialogservice';
 
-import 'ts-mfe-console-vue-components/dist/style.css';
+import 'ts-admin-components-dev/dist/style.css';
 import 'remixicon/fonts/remixicon.css';
 import 'vue-loading-overlay/dist/css/index.css';
 
@@ -29,7 +26,10 @@ import {
   CategoryTree,
   DateText,
   StaticTable,
-} from 'ts-mfe-console-vue-components';
+  ScanQR,
+} from 'ts-admin-components-dev';
+
+import { Icon } from '@iconify/vue';
 
 import Button from 'primevue/button';
 import Column from 'primevue/column';
@@ -72,6 +72,7 @@ const vueLifecycles = singleSpaVue({
     app.use(PrimeVue);
     app.use(ToastService);
     app.use(DialogService);
+    app.use(CToastService);
 
     app.component('Button', Button);
     app.component('Column', Column);
@@ -90,6 +91,7 @@ const vueLifecycles = singleSpaVue({
     app.component('Dropdown', Dropdown);
     app.component('Toolbar', Toolbar);
     app.component('Loading', Loading);
+    app.component('ScanQR', ScanQR);
 
     app.component('DynamicTable', DynamicTable);
     app.component('StaticTable', StaticTable);
@@ -103,6 +105,7 @@ const vueLifecycles = singleSpaVue({
     app.component('CategoryTree', CategoryTree);
     app.component('DateText', DateText);
     app.component('Steps', Steps);
+    app.component('Icon', Icon);
   },
 });
 

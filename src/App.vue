@@ -22,10 +22,12 @@ const isLoading = computed(() => store.state.loading);
 @import '~vue-loading-overlay/dist/css/index.css';
 @import '~primevue/resources/primevue.min.css';
 @import '~primeicons/primeicons.css';
+@import '~node/ts-admin-components-dev/dist/style.css';
 </style>
 
 <style lang="scss">
-@import '~scss/index.scss';
+@import '~scss/var';
+@import '~rfs/scss';
 
 * {
   font-family: 'Manrope', Helvetica, Arial, sans-serif;
@@ -49,11 +51,6 @@ const isLoading = computed(() => store.state.loading);
   letter-spacing: 0.224px;
 }
 
-.p-datatable .p-datatable-thead > tr > th {
-  border-bottom: 1px solid $general-line;
-  background: $primary-bg-weak;
-}
-
 .p-card {
   box-shadow: none;
 }
@@ -75,7 +72,6 @@ const isLoading = computed(() => store.state.loading);
   flex-direction: column;
 
   .breadcrumb-label {
-    color: $general-body;
     font-style: normal;
     font-weight: 700;
     line-height: 24px; /* 218.182% */
@@ -83,84 +79,39 @@ const isLoading = computed(() => store.state.loading);
   }
 }
 
-.table__toolbar {
+.table-toolbar {
   display: flex;
   justify-content: flex-end;
   align-items: center;
   align-self: stretch;
   gap: 8px;
-  background: $general-bg-white;
   padding: 0;
   border: none;
 }
 
-.table__toolbar button {
-  height: 26.2px;
-}
+.p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link {
+  @include padding(11.2px 8px !important);
+  border-width: 0 0 2px 0 !important;
+  text-decoration: none;
 
-.p-datatable {
-  margin: 0 !important;
-}
-
-.p-datatable .p-datatable-tbody > tr {
-  outline: none;
-
-  > td {
-    border: none;
+  .p-menuitem-text {
+    @include font-size(11.2px);
+    font-weight: 500;
+    color: $general-grey;
   }
 }
 
-.p-datepicker {
-  scale: 0.65;
+.p-tabmenu-nav .p-tabmenuitem .p-menuitem-link:not(.p-disabled):focus {
+  box-shadow: none;
 }
 
-::-webkit-scrollbar {
-  cursor: pointer;
-  width: 10px;
-  height: 10px;
+.p-tabmenu .p-tabmenu-nav,
+.p-tabmenuitem .p-menuitem-link {
+  border-width: 0 0 2px 0 !important;
+  color: $general-grey;
 }
 
-::-webkit-scrollbar-thumb {
-  background-color: #a0a3bd64;
-  border-radius: 4px;
-}
-
-.p-button.p-button-success.p-button-outlined {
-  background-color: transparent !important;
-}
-
-button.p-button.p-component.p-button-primary.primary-outlined {
-  border-radius: 4px;
+.p-tabmenuitem.p-highlight .p-menuitem-text {
   color: $primary;
-  border: 1px solid;
-  padding: 7.6px 12px;
-  background: none;
-}
-
-button.p-button.p-component.p-button-text {
-  border-radius: 4px;
-  padding: 7.6px 12px;
-  color: $general-header-weak;
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-  letter-spacing: 0.36px;
-}
-
-.p-button-icon.p-button-icon-left {
-  margin-right: 4px;
-}
-
-.p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link {
-  margin: 0 0 -3px 0;
-}
-
-.p-datatable .p-paginator {
-  padding-bottom: 0 !important;
-}
-
-.p-paginator .p-paginator-current {
-  height: 26.2px;
 }
 </style>

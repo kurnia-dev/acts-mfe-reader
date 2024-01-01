@@ -17,16 +17,7 @@ const menus = ref([
   <Card>
     <template #content>
       <TabMenu :model="menus" :exact="false" />
-      <div
-        style="
-          display: flex;
-          flex-direction: column;
-          gap: 10px;
-          padding-top: 10px;
-        "
-      >
-        <router-view />
-      </div>
+      <router-view />
     </template>
   </Card>
 </template>

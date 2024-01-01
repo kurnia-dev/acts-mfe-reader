@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref, defineProps, computed } from 'vue';
 import store from '@/store';
-import ButtonScanQR from '@/components/ButtonScanQR.vue';
 import Field from './Field.vue';
 
 interface Client {
@@ -98,7 +97,7 @@ const submitQR = async () => {
 </script>
 <template>
   <div id="scan-rfid">
-    <Toolbar class="table__toolbar">
+    <Toolbar class="table-toolbar">
       <template #start>
         <span class="message">Make sure the reader is connected</span>
       </template>

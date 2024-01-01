@@ -46,7 +46,7 @@ const detailList = transactionDetail.list.map((item, index) => ({
 <template>
   <div class="transaction__detail">
     <div>
-      <div>
+      <div class="detail__label">
         <span>Transaction</span>
         <span>Partner / Client</span>
         <span>Qty</span>
@@ -58,7 +58,7 @@ const detailList = transactionDetail.list.map((item, index) => ({
       </div>
     </div>
     <div>
-      <div>
+      <div class="detail__label">
         <span>Date Time</span>
         <span>Manager</span>
       </div>
@@ -82,10 +82,13 @@ const detailList = transactionDetail.list.map((item, index) => ({
   display: flex;
   gap: 20px;
   margin-bottom: 12px;
-  color: #4e4b66;
 
   > div {
     display: flex;
+
+    .detail__label {
+      color: #4e4b66;
+    }
 
     > div {
       display: flex;

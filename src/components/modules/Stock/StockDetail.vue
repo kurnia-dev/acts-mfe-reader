@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, reactive, ref } from 'vue';
+import { computed, onMounted, reactive, ref } from 'vue';
 import { MenuOption } from 'ts-mfe-console-vue-components/dist/types/options';
 import { StaticTable } from 'ts-mfe-console-vue-components';
 import TransactionDetail from './DetailTransactionHistory/TransactionDetail.vue';
@@ -17,7 +17,7 @@ import {
   CurrentStockDetailColumns,
   StockDetailHistoryColumns,
 } from '@/option/columns';
-import { fetchAPI } from '@/services/reader.service';
+import { getStockDetail } from '@/services/reader.service';
 import FetchParams from '@/types/fetchParams.type';
 
 const showStockFilter = ref<boolean>(false);
@@ -135,12 +135,12 @@ const clearFilter = (filterObject: FetchParams) => {
 
 const currentItem = ref();
 const fetchDetail = (params?: FetchParams) => {
-  fetchAPI('/v2/_id/' + props.id, params).then((res) => {
+  getStockDetail(props.id, params).then((res) => {
     currentItem.value = res?.data;
   });
 };
 
-fetchDetail();
+onMounted(() => fetchDetail());
 /**
  * Object contains detailed information about the tag
  * passed into detailCard component.
@@ -177,7 +177,7 @@ const propItem = computed(() => ({
     <DetailCard :item="propItem" />
     <TabView>
       <TabPanel header="Current Stock">
-        <div class="table__toolbar">
+        <div class="table-toolbar">
           <SearchButton
             @search="
               () => {
@@ -210,7 +210,7 @@ const propItem = computed(() => ({
         />
       </TabPanel>
       <TabPanel header="Transaction History">
-        <div class="table__toolbar">
+        <div class="table-toolbar">
           <SearchButton
             @search="
               () => {

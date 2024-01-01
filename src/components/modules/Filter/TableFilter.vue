@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, reactive, defineProps, defineEmits, computed } from 'vue';
 import { Filter, FilterParams } from '@/types/filter.type';
+import { getTagStock } from '@/services/reader.service';
 
 defineProps<{
   filterList: string[];
@@ -14,7 +15,7 @@ const emit = defineEmits<{
 
 const allData = ref();
 const fetchData = (params?: FetchParams) => {
-  fetchAPI('/v2/_id', params).then((res) => {
+  getTagStock(params).then((res: any) => {
     allData.value = res?.data;
   });
 };
@@ -62,7 +63,6 @@ const modelOptions = computed(() =>
 );
 
 import { LastTransaction } from '@/types/lastTransaction.type';
-import { fetchAPI } from '@/services/reader.service';
 import FetchParams from '@/types/fetchParams.type';
 const lastTransactionOptions = ref<LastTransaction[]>(['In', 'Out', 'Retur']);
 

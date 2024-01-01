@@ -2,65 +2,86 @@
 import { TransactionDetailColumns } from '@/option/columns';
 import { StaticTable } from 'ts-mfe-console-vue-components';
 import DetailCard from '@/components/common/DetailCard.vue';
+import { computed, onMounted, ref, watch } from 'vue';
+import FetchParams from '@/types/fetchParams.type';
+import { getTransactionHistoryDetail } from '@/services/reader.service';
 
-defineProps<{
-  transaction?: string;
-  client?: string;
-  qty?: number;
-  date_time?: string;
-  manager?: string;
+const props = defineProps<{
+  id: string;
 }>();
 
-const transactionDetailData = [
-  {
-    no: 1,
-    device_name: 'Handled Reader',
-    hardware_id: 'Client H',
-    device_id: 'FESFSD323',
-  },
-  {
-    no: 2,
-    device_name: 'Handled Reader',
-    hardware_id: 'Client H',
-    device_id: 'FESFSD323',
-  },
-  {
-    no: 3,
-    device_name: 'Handled Reader',
-    hardware_id: 'Client H',
-    device_id: 'FESFSD323',
-  },
-];
+const currentTransaction = ref();
+const fetchDetail = (params?: FetchParams) => {
+  getTransactionHistoryDetail(props.id, params).then((res) => {
+    currentTransaction.value = res?.data;
+  });
+};
 
-const item = {
-  image_name: '',
-  device_name: 'Handheld Reader',
-  sku: 'TS-HNDSR-002',
+onMounted(() => fetchDetail());
+
+watch(currentTransaction, () => console.log(currentTransaction?.value));
+
+const propItem = computed(() => ({
+  image_name: currentTransaction?.value?.image,
+  device_name: currentTransaction?.value?.name,
+  sku: currentTransaction?.value?.sku,
   details: [
     {
       label: 'Category',
-      value: 'Short range',
+      value: currentTransaction?.value?.category,
       nameContainer: true,
     },
     {
       label: 'Brand',
-      value: 'TAG Samurai',
+      value: currentTransaction?.value?.brand,
       nameContainer: true,
     },
     {
       label: 'Model/Type',
-      value: 'RD2',
+      value: currentTransaction?.value?.model,
       nameContainer: true,
     },
     {
       label: 'Current Stock',
-      value: 10,
+      value: currentTransaction?.value?.stock,
     },
   ],
-};
+}));
+
+const dataDummy = [
+  {
+    _id: 'x',
+    name: 'Name',
+    hardwareId: 'FESFSDSSDSD',
+    deviceId: 'FESFSDSSDSD',
+  },
+  {
+    _id: 'x2',
+    name: 'Name',
+    hardwareId: 'FESFSDSSDSD',
+    deviceId: 'FESFSDSSDSD',
+  },
+  {
+    _id: 'x3',
+    name: 'Name',
+    hardwareId: 'FESFSDSSDSD',
+    deviceId: 'FESFSDSSDSD',
+  },
+  {
+    _id: 'x4',
+    name: 'Name',
+    hardwareId: 'FESFSDSSDSD',
+    deviceId: 'FESFSDSSDSD',
+  },
+];
+
+const columnDataDummy = dataDummy.map((item, index) => ({
+  no: index + 1,
+  ...item,
+}));
 </script>
 <template>
-  <DetailCard :item="item" />
+  <DetailCard :item="propItem" />
   <div class="transaction__detail">
     <div>
       <div>
@@ -69,9 +90,9 @@ const item = {
         <span>Qty</span>
       </div>
       <div>
-        <span>: Out</span>
-        <span>: PT ABC</span>
-        <span>: 10 Unit</span>
+        <span>: {{ currentTransaction?.lastTransaction }}</span>
+        <span>: {{ currentTransaction?.company }}</span>
+        <span>: {{ currentTransaction?.transactionQty }} Unit</span>
       </div>
     </div>
     <div>
@@ -80,13 +101,20 @@ const item = {
         <span>Manager</span>
       </div>
       <div>
-        <span>: 22/03/23 13:00</span>
-        <span>: John Doe</span>
+        <span
+          >:
+          <DateText
+            :date="currentTransaction?.transactionDate"
+            style="display: inline"
+            :useTime="true"
+          />
+        </span>
+        <span>: {{ currentTransaction?.manager }}</span>
       </div>
     </div>
   </div>
   <StaticTable
-    :datas="transactionDetailData"
+    :datas="columnDataDummy"
     :columns="TransactionDetailColumns"
     dataKey="device_id"
     :rows="5"
