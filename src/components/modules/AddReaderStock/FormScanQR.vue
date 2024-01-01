@@ -97,7 +97,7 @@ const submitQR = async () => {
 </script>
 <template>
   <div id="scan-rfid">
-    <Toolbar class="table__toolbar">
+    <Toolbar class="table-toolbar">
       <template #start>
         <span class="message">Make sure the reader is connected</span>
       </template>

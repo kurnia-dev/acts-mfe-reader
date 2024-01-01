@@ -1,4 +1,4 @@
-import { TableColumn } from '@/types/TableColumn';
+import { TableColumn } from 'ts-admin-components-dev/dist/types/columns';
 import Image from 'primevue/image';
 import Field from '@/components/modules/AddReaderStock/Field.vue';
 import { ref, Ref } from 'vue';
@@ -11,6 +11,7 @@ const useColumns = (): Ref<TableColumn[]> => {
       field: 'image',
       header: 'Photo',
       sortable: true,
+      fixed: true,
       bodyComponent() {
         return {
           component: Image,

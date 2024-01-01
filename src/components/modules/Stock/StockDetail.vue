@@ -177,7 +177,7 @@ const propItem = computed(() => ({
     <DetailCard :item="propItem" />
     <TabView>
       <TabPanel header="Current Stock">
-        <div class="table__toolbar">
+        <div class="table-toolbar">
           <SearchButton
             @search="
               () => {
@@ -210,7 +210,7 @@ const propItem = computed(() => ({
         />
       </TabPanel>
       <TabPanel header="Transaction History">
-        <div class="table__toolbar">
+        <div class="table-toolbar">
           <SearchButton
             @search="
               () => {

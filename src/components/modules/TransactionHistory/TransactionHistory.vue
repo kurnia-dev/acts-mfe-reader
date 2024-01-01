@@ -84,7 +84,7 @@ const options = ref<MenuOption[]>([
 ]);
 </script>
 <template>
-  <div class="table__toolbar">
+  <div class="table-toolbar">
     <SearchButton
       v-model="query"
       @search="

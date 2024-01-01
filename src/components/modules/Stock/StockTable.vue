@@ -143,8 +143,14 @@ const exportExcel = async () => {
 };
 </script>
 <template>
-  <div class="table__toolbar">
-    <ButtonScanQR @scan="onScanQR" />
+  <div class="table-toolbar">
+    <ScanQR @scan="onScanQR" />
+    <button class="ts-button ts-rfid-button ts-button-primary" type="button">
+      <Icon icon="ri:qr-code-line" />
+      {{ 'Scan QR' }}
+
+      <i class="indicator bg-success"></i>
+    </button>
     <SearchButton
       v-model="query"
       @search="
@@ -206,7 +212,7 @@ const exportExcel = async () => {
     <AddReaderStockDialog :id="_id" />
   </Dialog>
 </template>
-<style scoped lang="scss">
+<style lang="scss">
 @import '~scss/index.scss';
 .p-column-title {
   width: max-content !important;

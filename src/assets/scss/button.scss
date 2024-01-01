@@ -41,11 +41,11 @@
 }
 
 .p-button.p-button-success {
-  background: $success;
+  background-color: $success;
   border: 1px solid $success;
 }
 .p-button.p-button-success:enabled:hover {
-  background: $success-strong;
+  background-color: $success-strong;
   border: 1px solid $success;
 }
 
