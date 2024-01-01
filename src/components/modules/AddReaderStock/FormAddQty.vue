@@ -33,13 +33,13 @@ const toggleDisableNext = (
   // To disable and enable the next button if the form has not filled
   if (isRetur.value) {
     disableNext.value = !(
-      qty.value != null && selectedClient.value != undefined
+      qty.value !== null && typeof selectedClient.value !== 'undefined'
     );
   } else {
     selectedClient.value = undefined; // To reset the client input field if the checkbox is not checked
     disableNext.value = !(
-      (typeof e !== 'boolean' && e.value != null) ||
-      qty.value != null
+      (typeof e !== 'boolean' && e.value !== null) ||
+      qty.value !== null
     );
   }
 };
